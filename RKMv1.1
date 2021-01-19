@@ -1,0 +1,272 @@
+# RKM - Rewards by Killing Mobs
+# Author: RohanLupcanus
+# Version: 1.1
+# Old Version: Get Version 1.0 at https://github.com/rohanlupcanus/rkm-minecraft/blob/main/RKM.sk
+
+# ESPAÑOL
+# Este Skript permite agregar recompensas a los usuarios por matar una cantidad estipulada de entidades
+# Las mismas se establecen en el archivo config.yml que se genera automaticamente en "plugins/Skript/RKM/config.yml"
+
+# ESTA VERSION REQUIERE LOS  SIGUIENTES PLUGINS
+# Skript - https://dev.bukkit.org/projects/skript - https://drive.google.com/file/d/1OM8jwOGdBxIt-j-CUqFjQt7svZ28HpSC/view?usp=sharing
+# SkRayFall+1.9.23 - https://dev.bukkit.org/projects/skrayfall - https://drive.google.com/file/d/1T9EP7RIiCVOZFwL2xeUvZ2t9_bQzcVL_/view?usp=sharing
+# SkUtilities.v0.9.2 - https://github.com/tim740/skUtilities/releases/tag/v0.9.2 - https://drive.google.com/file/d/1-9ys8j_NO8PCXse4Plny-OfUcvivDU1Q/view?usp=sharing
+# TuSKe 1.8.3-PikachuPatch-v3 - https://skripttools.net/dl/TuSKe+1.8.3-PikachuPatch-v3.jar - https://drive.google.com/file/d/1DqbbgfG7sz8PvABTSysfCNeY5Ew8lZz4/view?usp=sharing
+
+# ENGLISH
+# This Skript allows adding rewards to users for killing a stipulated number of entities
+# They are established in the config.yml file that is generated automatically in "plugins/Skript/RKM/config.yml"
+
+# THIS VERSION REQUIRES THE FOLLOWING PLUGINS
+# Skript - https://dev.bukkit.org/projects/skript - https://drive.google.com/file/d/1OM8jwOGdBxIt-j-CUqFjQt7svZ28HpSC/view?usp=sharing
+# SkRayFall+1.9.23 - https://dev.bukkit.org/projects/skrayfall - https://drive.google.com/file/d/1T9EP7RIiCVOZFwL2xeUvZ2t9_bQzcVL_/view?usp=sharing
+# SkUtilities.v0.9.2 - https://github.com/tim740/skUtilities/releases/tag/v0.9.2 - https://drive.google.com/file/d/1-9ys8j_NO8PCXse4Plny-OfUcvivDU1Q/view?usp=sharing
+# TuSKe 1.8.3-PikachuPatch-v3 - https://skripttools.net/dl/TuSKe+1.8.3-PikachuPatch-v3.jar - https://drive.google.com/file/d/1DqbbgfG7sz8PvABTSysfCNeY5Ew8lZz4/view?usp=sharing
+
+# Evento: cuando un jugador asesina una entidad
+# Event: When a player kill an entity
+
+# ========== GENERADOR DE CONFIGURACION DE RECOMPENSAS INICIO ==========
+# ========== REWARDS CONFIGURATION GENERATOR START =========
+
+on script load:
+  if file "plugins/Skript/RKM/config.yml" doesn't exist:
+    create file "plugins/Skript/RKM/config.yml"
+    write "## RKM - Rewards by Killing Mobs" at line 1 to file "plugins/Skript/RKM/config.yml"
+    write "## RKM - Author: RohanLupcanus" at line 2 to file "plugins/Skript/RKM/config.yml"
+    write "## ESPANOL" at line 3 to file "plugins/Skript/RKM/config.yml"
+    write "## Este es el archivo de configuracion de las recompensas del sistema RKM - Rewards by Killing Mobs" at line 4 to file "plugins/Skript/RKM/config.yml"
+    write "## El mismo posee recompensas por defecto por lo cual debe editarse a gusto" at line 5 to file "plugins/Skript/RKM/config.yml"
+    write "## El nombre del primer nodo (MOBS-REWARDS-LEVELS) no debe modificarse salvo que sepa que esta haciendo" at line 6 to file "plugins/Skript/RKM/config.yml"
+    write "## Los segundos nodos poseen el nombre de la entidad tal cual esta estipulada en Minecraft Java Edition." at line 7 to file "plugins/Skript/RKM/config.yml"
+    write "## Escribir un nombre de forma erronea ocaciona que el sistema de recompensas para esa entidad no funcione" at line 8 to file "plugins/Skript/RKM/config.yml"
+    write "## El tercer nodo ('1') es la cantidad de entidades asesinadas que se requiere para cobrar la recompensa estipulada en el valor de dicho nodo" at line 9 to file "plugins/Skript/RKM/config.yml"
+    write "## Este nodo numerico debe siempre estar dentro de las comillas simples." at line 10 to file "plugins/Skript/RKM/config.yml"
+    write "## El Valor del segundo nodo (Ejemplo: 1 dirt) debe contener primero una cantidad numerica seguida del nombre del item (objeto) exacto a el de Minecraft Java Edition" at line 11 to file "plugins/Skript/RKM/config.yml"
+    write "## Escribir cualquier de estos valores de forma erronea ocaciona que el jugador no reciba el item estipulado y generara un error en la consola" at line 12 to file "plugins/Skript/RKM/config.yml"
+    write "## Simplemente sigue los patrones estipulados y no tendra problemas" at line 13 to file "plugins/Skript/RKM/config.yml"
+
+    write "## ENGLISH" at line 15 to file "plugins/Skript/RKM/config.yml"
+    write "## This is the configuration file of the RKM system rewards - Rewards by Killing Mobs" at line 16 to file "plugins/Skript/RKM/config.yml"
+    write "## It has rewards by default so it must be edited to taste" at line 17 to file "plugins/Skript/RKM/config.yml"
+    write "## The name of the first node (MOBS-REWARDS-LEVELS) should not be modified unless you know what you are doing" at line 18 to file "plugins/Skript/RKM/config.yml"
+    write "## The second nodes have the name of the entity as it is stipulated in Minecraft Java Edition" at line 19 to file "plugins/Skript/RKM/config.yml"
+    write "## Typing a name wrong causes the reward system for that entity to not work" at line 20 to file "plugins/Skript/RKM/config.yml"
+    write "## The third node ('1') is the number of entities killed that is required to collect the reward stipulated in the value of said node" at line 21 to file "plugins/Skript/RKM/config.yml"
+    write "## This numeric node must always be inside the single quotes" at line 22 to file "plugins/Skript/RKM/config.yml"
+    write "## The value of the second node (Example: 1 dirt) must first contain a numerical quantity followed by the name of the item (object) exact to that of Minecraft Java Edition" at line 23 to file "plugins/Skript/RKM/config.yml"
+    write "## Writing any of these values wrongly causes the player not to receive the stipulated item and will generate an error in the console" at line 24 to file "plugins/Skript/RKM/config.yml"
+    write "## Just follow the stipulated patterns and you will have no problems" at line 25 to file "plugins/Skript/RKM/config.yml"
+
+    set skutil yaml value "MOBS-REWARDS-LEVELS.blaze.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.blaze.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.blaze.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.cave spider.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.cave spider.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.cave spider.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.chicken jockey.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.chicken jockey.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.chicken jockey.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.creeper.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.creeper.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.creeper.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.drowned.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.drowned.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.drowned.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.elder guardian.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.elder guardian.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.elder guardian.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ender dragon.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ender dragon.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ender dragon.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.enderman.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.enderman.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.enderman.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.endermite.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.endermite.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.endermite.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.evoker.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.evoker.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.evoker.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ghast.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ghast.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.ghast.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.giant.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.giant.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.giant.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.guardian.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.guardian.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.guardian.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.hoglin.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.hoglin.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.hoglin.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.husk.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.husk.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.husk.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.illusioner.1" from file "plugins/Skript/RKM/config.yml" to "1 leather helmet"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.illusioner.5" from file "plugins/Skript/RKM/config.yml" to "8 bread"
+    set skutil yaml value "MOBS-REWARDS-LEVELS.illusioner.10" from file "plugins/Skript/RKM/config.yml" to "1 iron sword"
+    send "<green>Rewards by Killing Zombies configuration has been created!<reset>" to console
+
+    # ========== GENERADOR DE CONFIGURACION DE RECOMPENSAS FIN ==========
+    # ========== REWARDS CONFIGURATION GENERATOR END =========
+
+  # ========== GENERADOR DE MENU MISIONES INICIO ==========
+  # ========== MISSIONS MENU GENERATOR START =========
+
+  set {RKMMobs::*} to skutil yaml nodes "MOBS-REWARDS-LEVELS" from file "plugins/Skript/RKM/config.yml" # Variable de archivo de Configuracion - Config's file variable
+  set {RKMMobsQuantity} to amount of {RKMMobs::*} # Variable de Cantidad de Entidades con recompensas - Variable of Quantity of entities with rewards
+  set {_displaySlot} to 0 # Contador de Slot - Slot Counter
+  set {_displayRows} to ceil({RKMMobsQuantity} / 9) + 1 # Seteo de Cantidad de Filas - Rows quantity set
+  set {_menuSlot} to ({_displayRows} - 1) * 9 # Seteo de fila del menu - Menu row set
+  create a gui with id "Missions" with virtual chest with {_displayRows} rows named "&1Missions": # Crea la GUI - GUI Create
+    loop {RKMMobs::*}: # Bucle sobre todas las entidades con recompensa - Loop all entities with rewards
+      set {_spawnerEgg} to "%loop-value% spawn egg" parsed as item # Variable del "Generador" de la entidad - Variable of a Spawner Egg of entity
+      set {_loopValue} to loop-value-1 # Valor del bucle - Loop Value
+      set {_loopNameFirstWord} to first character of "%loop-value%" in upper case # Capitaliza el nombre - Capitalized name
+      set {_loopNameRestWord} to last (length of "%loop-value%" - 1) characters of "%loop-value%" in lower case # Capitaliza el nombre - Capitalized name
+      make gui slot {_displaySlot} with {_spawnerEgg} named "%{_loopNameFirstWord}%%{_loopNameRestWord}%" with lore "&dClick to Start": # Muestra el Generador de Entidad - Show the Spawner Egg
+        execute player command "/rkmobjetives %{_loopValue}%" # Lleva al jugador al menu de objetivos de la entidad - Show next gui Objetives of this entity
+      set {_displaySlot} to {_displaySlot} + 1 # Variable de slot - Slot Variable
+    format gui slot {_menuSlot} with barrier named "&4Close": # Boton de Cerrar - Close Button
+      close player's inventory # Cierra el inventario - Close the inventory
+
+  # ========== GENERADOR DE MENU MISIONES FIN =========
+  # ========== MISSIONS MENU GENERATOR END ==========
+
+on death: # Evento cuando ocurre una muerte - Event on death occurs
+  if attacker is a player: # Condicion si el atacante es un jugador - Condition if the victim is a entity
+    if victim is a entity: # Condicion si la victima es una entidad - Condition if victim is a entity
+      set {_RKMEntity} to "%entity%" # Variable de la entidad en forma de texto - Entity variable on String format
+      add 1 to {%{_RKMEntity}% killed::%attacker%} # Agrega 1 la la cantidad de Entidades asesinadas por ese jugador - Add 1 to the number of entities killed by that player
+      set {_RKMRewards::*} to skutil yaml nodes "MOBS-REWARDS-LEVELS" from file "plugins/Skript/RKM/config.yml" # Chequea la configuracion de Recompensas - Check rewards configuration
+      if {_RKMRewards::*} contain "%entity%": # Si la entidad asesinada tiene configurada recompensas - If the killed entity has rewards configured
+        # send "Has matado %{%{_RKMEntity}% killed::%attacker%}% de %{_RKMEntity}%" to attacker# Envia un mensaje de la cantidad que lleva de esta entidad asesinada - Send a Message of the amount of this killed entity
+        if skutil yaml value "MOBS-REWARDS-LEVELS.%{_RKMEntity}%.%{%{_RKMEntity}% killed::%attacker%}%" from file "plugins/Skript/RKM/config.yml" is set: # Si la cantidad total coincide con una recompensa estipulada - If the total amount matches a stipulated reward
+          set {_RKMItemReward} to skutil yaml value "MOBS-REWARDS-LEVELS.%{_RKMEntity}%.%{%{_RKMEntity}% killed::%attacker%}%" from file "plugins/Skript/RKM/config.yml" # Variable de la recompensa estipulada - Stipulated reward variable
+          set {_RKMTheReward} to {_RKMItemReward} parsed as item # Recompensa en formato de item - Reward on item format
+          if attacker doesn't have enough space for {_RKMTheReward}: # Condicion si el atacante no tiene espacio en el inventario para recibir la recompensa - Condition if the attacker don't enough space on inventory to keep the reward
+            drop {_RKMTheReward} in front of the attacker's head # Si no tiene espacio, la recompensas cae al suelo - If don't enough space, drop the reward on the floor
+            play sound "item.totem.use" with volume 1 to the attacker # Reproduce el sonido del uso del totem (Puede ser cambiado por cualquiera de la lista de Minecraft Java Edition https://www.digminecraft.com/lists/sound_list_pc.php) - Play a totem use sound (Can be replaced for any Minecraft Java Edition Sounds https://www.digminecraft.com/lists/sound_list_pc.php )
+            send "<green>You have obtained a Reward!<reset> - <light cyan>%{_RKMTheReward}%<reset>: <red> This has been drop to the ground<reset>" to attacker
+          else: # Si el atacante tiene espacio - If attacker enough space.
+            give {_RKMTheReward} to attacker # Le da la recompensa al usuario - Give the reward to player
+            play sound "item.totem.use" with volume 1 to the attacker # Reproduce el sonido del uso del totem (Puede ser cambiado por cualquiera de la lista de Minecraft Java Edition https://www.digminecraft.com/lists/sound_list_pc.php) - Play a totem use sound (Can be replaced for any Minecraft Java Edition Sounds https://www.digminecraft.com/lists/sound_list_pc.php )
+            send "<green>You have obtained a Reward!<reset> - <light cyan>%{_RKMTheReward}%<reset>" to attacker# Envia un mensaje de que ha recibido una recompensa - Send a message that you have received a reward
+
+command /rkmset <text> <text> <number>: # USO: /rkmset <usuario> <entidad> <cantidad> - USAGE: /rmkset <user> <entity> <quantity>
+  description: This command enables the Operator to set the number of entities killed by a player
+  trigger:
+    if player has permission "minecraft.command.stop": # Condicion si el jugador tiene el permiso de STOP - Condition if the player has the stop permission
+      if {%arg-2% killed::%arg-1%} is set:
+        set {%arg-2% killed::%arg-1%} to arg-3
+        send "<green>%arg-2% kill counter has been changed to %arg-3% for %arg-1%"
+      else:
+        send "<red>Entity or user not found. Check Player and Entity name<reset>"
+
+command /rkmget <text> <text>: # USO: /rkmget <usuario> <entidad> - USAGE: /rkmget <user> <entity> <quantity>
+  description: This command enables the operator to get the number of entities killed by a player
+  trigger:
+    if player has permission "minecraft.command.stop": # Condicion si el jugador tiene el permiso de STOP - Condition if the player has the stop permission
+      if {%arg-2% killed::%arg-1%} is set:
+        send "<yellow>The player %arg-1% has been killing <reset><green>%{%arg-2% killed::%arg-1%}%<reset> <cyan>%arg-2%<reset>" # Mensaje de contador de esta entidad asesinada - Entity counter message
+      else:
+        send "<red>Entity or user not found. Maybe the player has not kill this entity yet. Check Player and Entity name<reset>" # Mensaje de que aun no se ha asesinado a esta entidad o el nombre del jugador es erroneo - Message for not kill this entity yet or the player name has wrong
+
+command /rkm <text>:
+  description: This command enables the user to see the counter of specific entity killed
+  trigger:
+    if {%argument% killed::%player%} is set: # Condicion si la variable para esa entidad ha sido seteada (ha asesinado a esta entidad por primera vez) - Condition if the variable is set (if the player has kill this entity for first time)
+      send "<green>You has killed<reset> <cyan>%{%argument% killed::%player%}% %argument%<reset>" # Mensaje de cantidad de veces que ha asesinado a esta entidad - Counter of this entity killed for this player
+    else:
+      send "<light red>You have no kill a %argument% <light red>yet, of this is not an entity<reset>" # Mensaje de que aun no ha asesinado a esta entidad o no es una entidad valida - Message for not kill this entity or it's not a valid entity
+
+command /rkmmissions:
+	description: This command show the missions of RKM - Rewards by Killing Mobs
+	trigger:
+		open gui "Missions" to player # Abre el menu de misiones - Open the missions menu
+
+command /rkmobjetives <text>:
+	trigger:
+		set {_RKMMobs::*} to skutil yaml nodes "MOBS-REWARDS-LEVELS" from file "plugins/Skript/RKM/config.yml" # Variable de archivo de Configuracion - Config's file variable
+		if {_RKMMobs::*} contain argument: # Si hay recompensas establecidas para la entidad - If this entity has rewards
+			if {%argument% killed::%player%} is not set: # Si el contador de entidades el jugador no esta establecido - If the entity counter of the player is not set
+				set {%argument% killed::%player%} to 0 # Lo establece en 0 - Sets to 0
+			set {_RKMMobsRewards::*} to skutil yaml nodes "MOBS-REWARDS-LEVELS.%argument%" from file "plugins/Skript/RKM/config.yml" # Variable de recompensas de la entidad - Variable of Entity's rewards
+			set {_RKMMobsRewardsQuantity} to amount of {_RKMMobsRewards::*} # Variable de cantidad de recompensas - Variable of rewards quantity
+			set {_displayRows} to ceil({_RKMMobsRewardsQuantity} / 9) + 1 # Variable de cantidad de filas - Variable of quantity rows
+			set {_menuSlot} to ({_displayRows} - 1) * 9 # Variable de fila de menu - Variable of Menu row
+			open virtual chest with size {_displayRows} named "&1%argument%'s Objetives" to player # Abre el menu de objetivos - Open objetives menu
+			set {_rewardSlot} to 0 # Variable de slot - Slot's Variable
+			loop {_RKMMobsRewards::*}: # Bucle de recompensas - Rewards loop
+				set {_mobRewardItem} to skutil yaml value "MOBS-REWARDS-LEVELS.%argument%.%loop-value%" from file "plugins/Skript/RKM/config.yml" # Variable del item de recompensa - Variable of reward items
+				set {_mobRewardItem} to {_mobRewardItem} parsed as item # Transforacion de la informacion a Item - Parsed Item
+				if loop-value parsed as number > {%argument% killed::%player%}: # Si el jugador aun no obtubo la recompensa - If the player has not obtain this reward
+					set {_RKMMobsRemain} to (loop-value parsed as number) - {%argument% killed::%player%} # Contador de entidades faltantes para esta recompensa - Entity's left for reward counter
+					make a gui slot {_rewardSlot} of player with {_mobRewardItem} with lore "&4Kill %loop-value% %argument%'s" and "&d%{_RKMMobsRemain}% Kills Left" with no nbt to do nothing # Muestra el slot con la recompensa - Show slot with reward
+				else: # Si el jugador ya obtuvo esta recompensa - If the player alredy unlock this reward
+					make a gui slot {_rewardSlot} of player with {_mobRewardItem} with lore "&aObtained", "" and "&bYou has slain %loop-value% %argument%'s" with no nbt to do nothing # Muestra la recompensa obtenida - Show the item obtained
+				add 1 to {_rewardSlot} # Agrega 1 al contador de Slot - Add 1 to counter slot
+			format gui slot {_menuSlot} of player with white standing banner named "Back" to run: # Menu de "atras" - Back menu
+				make player execute command "/rkmmissions" # Abre el menu de misiones al jugador - Show the misions menu to player
+			make gui slot {_menuSlot}+8 of player with barrier named "&4Close" to close # Menu de cerrar - Close Menu
+		else: # Si la entidad no contiene recompensa - If selected entity has not rewards
+			send "&4This entity has not established reward" # Mensaje - Message
+
+variables:
+  # ESPAÑOL
+  # Contador de entidades asesinadas
+  # Si desea desactivar un contador agrege "# " al inicio de la linea
+  # Recomendación: Solo desactive estos contadores si no estipulara una recompensa para dicha entidad
+  # Las recompensas se establecen en el archivo plugins/Skript/RKM/config.yml
+  # Nota: Algunas entidades como las de "granja" no estan contienen contador, si desea agregarlas simplemente siga el mismo patrón
+  # Ejemplo: Agregar contador para tortugas: {turtle killed::%player%} = 0
+
+  # ENGLISH
+  # Killed Entities Counter
+  # If you want to disable a counter add "#" at the beginning of the line
+  # Recommendation: Only disable these counters if you did not stipulate a reward for that entity
+  # Rewards are set in the plugins/Skript/RKM/config.yml file
+  # Note: Some entities such as "farm" do not contain a counter, if you want to add them simply follow the same pattern
+  # Example: Add counter for turtles: {turtle killed::%player%} = 0
+
+  {blaze killed::%player%} = 0
+  {cave spider killed::%player%} = 0
+  {chicken jockey killed::%player%} = 0
+  {creeper killed::%player%} = 0
+  {drowned killed::%player%} = 0
+  {elder guardidan killed::%player%} = 0
+  {ender dragon killed::%player%} = 0
+  {enderman killed::%player%} = 0
+  {endermite killed::%player%} = 0
+  {evoker killed::%player%} = 0
+  {ghast killed::%player%} = 0
+  {giant killed::%player%} = 0
+  {guardian killed::%player%} = 0
+  {hoglin killed::%player%} = 0
+  {husk killed::%player%} = 0
+  {illusioner killed::%player%} = 0
+  {magma cube killed::%player%} = 0
+  {phantom killed::%player%} = 0
+  {piglin brutes killed::%player%} = 0
+  {piglin killed::%player%} = 0
+  {pillager killed::%player%} = 0
+  {ravager jockey killed::%player%} = 0
+  {ravager killed::%player%} = 0
+  {shulker killed::%player%} = 0
+  {skeleton horseman killed::%player%} = 0
+  {skeleton killed::%player%} = 0
+  {slime killed::%player%} = 0
+  {spider jockey killed::%player%} = 0
+  {spider killed::%player%} = 0
+  {stray killed::%player%} = 0
+  {vex killed::%player%} = 0
+  {vindicator killed::%player%} = 0
+  {witch killed::%player%} = 0
+  {wither killed::%player%} = 0
+  {wither skeleton killed::%player%} = 0
+  {zoglin killed::%player%} = 0
+  {zombie horse killed::%player%} = 0
+  {zombie killed::%player%} = 0
+  {zombie villager killed::%player%} = 0
+  {zombified piglin killed::%player%} = 0
